@@ -2,7 +2,7 @@
 
 function connect() {
 	global $pdo;
-	$pdo = new PDO(	"mysql:host=localhost;dbname=inventory", "root", "" );
+	$pdo = new PDO(	"mysql:host=localhost;dbname=corrosion", "root", "" );
 	
 }
 	
@@ -14,18 +14,28 @@ function get_all_records (  ) {
 	$stmt->execute( array() );
 	return $stmt->fetchAll ( PDO::FETCH_OBJ );
 	
+	
 }
 
-function get_actor_info ( $actor_id ) {
+function get_data ( $part_number ) {
 	global $pdo;
 	
 	$stmt = $pdo->prepare('
-		SELECT film_info, first_name, last_name 
-		FROM actor_info
-		WHERE actor_id LIKE :actor_id
-		LIMIT 1');
-	$stmt->execute( array(':actor_id' => $actor_id ) );
+		SELECT *
+		FROM inventory
+		WHERE LocalPartNumber LIKE :$part_number
+	   ');
+	$stmt->execute( array(':$part_number' => $part_number ) );
 	return $stmt->fetch ( PDO::FETCH_OBJ );
 	
+	$row = mysqli_fetch_array($stmt);
+	echo "<tr>";
+  	echo "<td>" . $row['Description'] . "</td>";
+  	echo "<td>" . $row['LocalPartNumber'] . "</td>";
+  	echo "</tr>";
+	
 }	
-?>
+
+connect();
+get_all_records();
+

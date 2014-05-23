@@ -1,7 +1,11 @@
+<?require 'functions.php';
+connect();
+$data = get_all_records();
+?>
 <?php include 'header.php'; ?>
 
 		<h1>Inventory</h1>
-		<form action="input" id="InvForm">
+		<form action="index.php" method="post">
 			<ul>
 				<li>Line: <input type="text" name="Line"></li>
 				<li>Part Number: <input type="text" name="localPartNumber"></li>
@@ -14,7 +18,7 @@
 				<li>UO: <input type="text" name="UO"></li>
 				<li>List: <input type="text" name="list"></li>
 				<li>Extended: <input type="text" name="extended" /></li>
-				<button type="button" id="saveform">Save</button>
+				<button type="submit">Go!</button>
 			</ul>
 			
 		</form>
@@ -27,7 +31,7 @@
 			$('button').on('click', function() {
 				
 				console.log("hello!!");
-				
+				connect();
 				console.log(get_all_records());
 			})();
 						
